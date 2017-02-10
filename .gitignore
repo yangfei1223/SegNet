@@ -1,0 +1,6 @@
+*.png
+*.solverstate
+*.caffemodel
+caffe-segnet/build
+caffe-segnet/distribute
+caffe-segnet/.build_release/

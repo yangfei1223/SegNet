@@ -5,8 +5,9 @@ layer {
   top: "data"
   top: "label"
   dense_image_data_param {
-    source: "/home/SegNet/KITTI/lidar/test.txt"	# Change this to the absolute path to your data file
-    batch_size: 1
+    source: "/home/SegNet/KITTI/lidar/train.txt"	# Change this to the absolute path to your data file
+    batch_size: 1   			# Change this number to a batch size that will fit on your GPU
+    shuffle: true
   }
 }
 layer {
@@ -51,7 +52,6 @@ layer {
   name: "conv1_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -111,7 +111,6 @@ layer {
   name: "conv2_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -171,7 +170,6 @@ layer {
   name: "conv3_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -231,7 +229,6 @@ layer {
   name: "conv4_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -302,7 +299,6 @@ layer {
   name: "conv_decode4_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -354,7 +350,6 @@ layer {
   name: "conv_decode3_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -406,7 +401,6 @@ layer {
   name: "conv_decode2_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -458,7 +452,6 @@ layer {
   name: "conv_decode1_bn"
   type: "BN"
   bn_param {
-	bn_mode: INFERENCE
 	scale_filler {
 	  type: "constant"
 	  value: 1
@@ -494,9 +487,18 @@ layer {
   }
 }
 layer {
-  name: "prob"
-  type: "Softmax"
+  name: "loss"
+  type: "SoftmaxWithLoss"
   bottom: "conv_classifier"
-  top: "prob"
+  bottom: "label"
+  top: "loss"
   softmax_param {engine: CAFFE}
+}
+layer {
+  name: "accuracy"
+  type: "Accuracy"
+  bottom: "conv_classifier"
+  bottom: "label"
+  top: "accuracy"
+  top: "per_class_accuracy"
 }

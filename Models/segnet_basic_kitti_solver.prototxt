@@ -10,6 +10,6 @@ display: 20
 momentum: 0.9
 max_iter: 5000
 weight_decay: 0.0005
-snapshot: 1000
+snapshot: 500
 snapshot_prefix: "/home/SegNet/Models/Training/segnet_basic_kitti"  	# Change this to the absolute path to where you wish to output solver snapshots
 solver_mode: CPU

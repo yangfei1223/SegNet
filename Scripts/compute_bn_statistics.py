@@ -6,7 +6,6 @@ from argparse import ArgumentParser
 
 
 
-
 caffe_root = '/SegNet/caffe-segnet/' 			# Change this to the absolute directoy to SegNet Caffe
 import sys
 sys.path.insert(0, caffe_root + 'python')
